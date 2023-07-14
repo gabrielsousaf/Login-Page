@@ -1,22 +1,54 @@
 import './Register.css'
 import Cat from '../../assets/cat-animate.svg'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
-import { FaEyeSlash } from 'react-icons/fa';
+
+import { useAuthentication } from '../../hooks/UseAuthentication';
+
+
+// import { FaEye } from 'react-icons/fa';
+// import { FaEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
+    const [displayName, setDisplayName] = useState("")
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const [inputType, setInputType] = useState('password');
+    const {createUser, erro: authError}
 
-    const handleClick = () => {
-        if (inputType === 'password') {
-            setInputType('text');
-        } else {
-            setInputType('password');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setError("");
+
+        const user = {
+            displayName,
+            email,
+            password
         }
-    };
+
+        if(password !== confirmPassword){
+            setError("As senhas precisam ser iguais")
+        }
+
+        console.log(user)
+    }
+
+
+
+
+    // const [inputType, setInputType] = useState('password');
+
+    // const handleClick = () => {
+    //     if (inputType === 'password') {
+    //         setInputType('text');
+    //     } else {
+    //         setInputType('password');
+    //     }
+    // };
 
     return (
         <div>
@@ -30,34 +62,76 @@ const Register = () => {
                 <div className="right-login">
                     <div className="card-login">
                         <h1>CRIAR CONTA</h1>
-
                         <br />
 
-                        <div className="textfield">
-                            <label htmlFor="usuario">Email:</label>
-                            <input type="email" name="Email" placeholder="Email" className="inputs required" />
-                            <span className="span-required">Digite um email válido</span>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className="textfield">
+                                <label htmlFor="user">Usuario:</label>
+                                <input
+                                    type="name"
+                                    name="user"
+                                    placeholder="Usuario"
+                                    className="inputs required"
+                                    required
+                                    value={displayName}
+                                    onChange={(e) => setDisplayName(e.target.value)}
+                                />
+                                {/* <span className="span-required">Digite um email válido</span> */}
+                            </div>
 
-                        <br />
+                            <br />
+                            <div className="textfield">
+                                <label htmlFor="email">Email:</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    className="inputs required"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                {/* <span className="span-required">Digite um email válido</span> */}
+                            </div>
 
-                        <div className="textfield">
-                            <label htmlFor="senha">Senha:</label>
-                            <input id="input" type={inputType} name="password" placeholder="Senha" />
-                            <span id="visible" onClick={handleClick}>
+                            <br />
+                            <div className="textfield">
+                                <label htmlFor="senha">Senha:</label>
+                                <input
+                                    type="password"
+                                    id="input"
+                                    value={password}
+                                    name="password"
+                                    placeholder="Senha"
+                                    required
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                {/* <span id="visible" onClick={handleClick}>
                                 {inputType === 'password' ? <FaEyeSlash /> : <FaEye />}
-                            </span>
-                            <br />
-                        </div>
+                            </span> */}
+                                <br />
+                            </div>
 
-                        <div className="textfield">
-                            <label htmlFor="senha"> Repita sua Senha:</label>
-                            <input id="input" type="password" name="password" placeholder="Senha" />
-                            <span className="span-required">Senhas devem ser compativeis!</span>
-                            <br />
-                        </div>
+                            <div className="textfield">
+                                <label htmlFor="senha"> Repita sua Senha:</label>
+                                <input
+                                    id="input"
+                                    type="password"
+                                    name="password"
+                                    placeholder="Senha"
+                                    required
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                                <br />
+                            </div>
 
-                        <button className="btn-login">CRIAR</button>
+                            <div className='container-btn'>
+                                <button className="button-login">CRIAR</button>
+                                {error && <p className='error'>{error}</p>}
+                            </div>
+
+                        </form>
 
                         <div className="footer">
                             <p>Você já tem uma conta?</p>
