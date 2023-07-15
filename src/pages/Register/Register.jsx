@@ -17,9 +17,9 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
 
-    const {createUser, erro: authError}
+    const {createUser, error: authError, loading} = useAuthentication();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         setError("");
@@ -32,12 +32,19 @@ const Register = () => {
 
         if(password !== confirmPassword){
             setError("As senhas precisam ser iguais")
+            return;
         }
 
-        console.log(user)
+        const res = await createUser(user);
+
+        console.log(res);
     }
 
-
+    useEffect(() => {
+        if(authError) {
+            setError(authError);
+        }
+    }, [authError])
 
 
     // const [inputType, setInputType] = useState('password');
@@ -127,7 +134,8 @@ const Register = () => {
                             </div>
 
                             <div className='container-btn'>
-                                <button className="button-login">CRIAR</button>
+                                {!loading && <button className='button-login'>CRIAR</button>}
+                                {loading && <button className='button-login' disabled >AGUARDE...</button>}
                                 {error && <p className='error'>{error}</p>}
                             </div>
 
