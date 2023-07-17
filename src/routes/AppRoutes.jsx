@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { useState, useEffect } from "react";
@@ -28,12 +28,24 @@ const AppRoutes = ()  => {
   }
 
   return (
-    <AuthProvider value={ user }>
+    <AuthProvider value={{ user }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route 
+            path="/"
+            element={!user ? <Login /> : <Navigate to="/dashboard" />} 
+          />
+
+          <Route 
+            path="/register"
+            element={!user ? <Register /> : <Navigate to="/dashboard" />} 
+          />
+
+          <Route 
+            path="/dashboard"
+            element={user ? <Dashboard /> : <Navigate to="/" />} 
+          />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

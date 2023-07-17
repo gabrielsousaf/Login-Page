@@ -1,22 +1,39 @@
 import '../Register/Register.css'
 import Cat from '../../assets/cat-animate.svg'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuthentication } from '../../hooks/UseAuthentication';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
-import { FaEyeSlash } from 'react-icons/fa';
+// import { FaEye } from 'react-icons/fa';
+// import { FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
 
-  const [inputType, setInputType] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleClick = () => {
-    if (inputType === 'password') {
-      setInputType('text');
-    } else {
-      setInputType('password');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError("");
+
+    const user = {
+      email,
+      password
     }
-  };
+
+    const res = await creteUser(user);
+
+    console.log(res)
+  }
+
+  useEffect(() => {
+    if(authError) {
+      setError(authError);
+    }
+  }, [authError])
 
   return (
     <div>
@@ -31,24 +48,38 @@ const Login = () => {
           <div className="card-login">
             <h1>LOGIN</h1>
             <br />
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="textfield">
-                <label htmlFor="usuario">Email:</label>
-                <input type="email" name="Email" placeholder="Email" className="inputs required" />
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="email"
+                  name="Email"
+                  placeholder="Email"
+                  className="inputs required"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}   
+                />
               </div>
               <br />
 
               <div className="textfield">
                 <label htmlFor="senha">Senha:</label>
-                <input id="input" type={inputType} name="password" placeholder="Senha" />
-                <span id="visible" onClick={handleClick}>
-                  {inputType === 'password' ? <FaEyeSlash /> : <FaEye />}
-                </span>
+                <input 
+                  id="input"
+                  name="password"
+                  placeholder="Senha" 
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <br />
               </div>
 
+             
               <div className='container-btn'>
-                <button className="button-login">ENTRAR</button>
+                {!loading && <button className='button-login'>ENTRAR</button>}
+                {loading && <button className='button-login' disabled >AGUARDE...</button>}
+                {error && <p className='error'>{error}</p>}
               </div>
             </form>
 
