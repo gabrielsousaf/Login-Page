@@ -13,6 +13,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const { login, error: authError, loading } = useAuthentication()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ const Login = () => {
       password
     }
 
-    const res = await creteUser(user);
+    const res = await login(user);
 
     console.log(res)
   }
@@ -66,6 +68,7 @@ const Login = () => {
               <div className="textfield">
                 <label htmlFor="senha">Senha:</label>
                 <input 
+                  type='password'
                   id="input"
                   name="password"
                   placeholder="Senha" 

@@ -1,3 +1,4 @@
+import './Dashboard.css'
 import { useAuthentication } from "../../hooks/UseAuthentication"
 
 const Dashboard = () => {
@@ -5,9 +6,11 @@ const Dashboard = () => {
   const { logout } = useAuthentication();
 
   return (
-    <div>
-      <h1>Teste</h1>
+    <div className='container'>
+      <div className='content'>
+      <h1>Voçê fez login</h1>
       <button onClick={logout}>Sair</button>
+      </div>
     </div>
   )
 }
