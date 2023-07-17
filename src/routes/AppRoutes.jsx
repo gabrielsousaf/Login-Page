@@ -46,6 +46,11 @@ const AppRoutes = ()  => {
             element={user ? <Dashboard /> : <Navigate to="/" />} 
           />
 
+          <Route 
+            path="*"
+            element={!user ? <Login /> : <Navigate to="/dashboard" />}
+          />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>
