@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const { login, error: authError, loading } = useAuthentication()
+  const { login, loginWithGoogle, error: authError, loading } = useAuthentication()
 
 
   const handleSubmit = async (e) => {
@@ -29,6 +29,21 @@ const Login = () => {
     const res = await login(user);
 
     console.log(res)
+  }
+
+  const handleLoginWithGoogle = async (e) => {
+    e.preventDefault();
+
+    setError('');
+
+    console.log('Ok')
+
+    try {
+      await loginWithGoogle();
+    }
+    catch (error){
+      setError('Ocorreu um erro no login com o Google. Por favor, tenete novamente!')
+    }
   }
 
   useEffect(() => {
@@ -81,6 +96,7 @@ const Login = () => {
              
               <div className='container-btn'>
                 {!loading && <button className='button-login'>ENTRAR</button>}
+                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>ENTRAR COM GOOGLE</button>}
                 {loading && <button className='button-login' disabled >AGUARDE...</button>}
                 {error && <p className='error'>{error}</p>}
               </div>
