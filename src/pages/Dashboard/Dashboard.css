@@ -9,8 +9,8 @@
     justify-content: center;
 }
 
-button{
-    background-color: #f44336;
+.logout{
+    background-color: #f44336 !important;
     font-weight: 800;
     padding: 18px 12px;
     border: none;
@@ -22,6 +22,6 @@ button{
     color:#2b134b; ;
 }
 
-button:hover{
-    background-color: #fca5a5;
+.logout:hover{
+    background-color: #fca5a5 !important;
 }

@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import './Dashboard.css'
 import { useAuthentication } from "../../hooks/UseAuthentication"
 
@@ -7,9 +8,10 @@ const Dashboard = () => {
 
   return (
     <div className='container'>
+      <Helmet> <title>Form React Logout</title> </Helmet>
       <div className='content'>
       <h1>Voçê fez login</h1>
-      <button onClick={logout}>Sair</button>
+      <button className='logout' onClick={logout}>Sair</button>
       </div>
     </div>
   )

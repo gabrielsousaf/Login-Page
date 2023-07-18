@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import '../Register/Register.css'
 import Cat from '../../assets/cat-animate.svg'
 
@@ -59,6 +60,7 @@ const Login = () => {
 
   return (
     <div>
+      <Helmet> <title>Form React Login</title> </Helmet>
       <div className="main-login">
 
         <div className="left-login">
