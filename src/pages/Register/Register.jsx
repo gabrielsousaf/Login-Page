@@ -6,9 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { useAuthentication } from '../../hooks/UseAuthentication';
 
-
-// import { FaEye } from 'react-icons/fa';
-// import { FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 
 const Register = () => {
     const [displayName, setDisplayName] = useState("")
@@ -16,8 +14,10 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
-    const {createUser, error: authError, loading} = useAuthentication();
+
+    const {createUser, loginWithGoogle, error: authError, loading} = useAuthentication();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,6 +39,21 @@ const Register = () => {
 
         console.log(res);
     }
+    
+    const handleLoginWithGoogle = async (e) => {
+        e.preventDefault();
+    
+        setError('');
+    
+        console.log('Ok')
+    
+        try {
+          await loginWithGoogle();
+        }
+        catch (error){
+          setError('Ocorreu um erro no login com o Google. Por favor, tenete novamente!')
+        }
+    }
 
     useEffect(() => {
         if(authError) {
@@ -46,16 +61,9 @@ const Register = () => {
         }
     }, [authError])
 
-
-    // const [inputType, setInputType] = useState('password');
-
-    // const handleClick = () => {
-    //     if (inputType === 'password') {
-    //         setInputType('text');
-    //     } else {
-    //         setInputType('password');
-    //     }
-    // };
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    }
 
     return (
         <div>
@@ -83,7 +91,6 @@ const Register = () => {
                                     value={displayName}
                                     onChange={(e) => setDisplayName(e.target.value)}
                                 />
-                                {/* <span className="span-required">Digite um email válido</span> */}
                             </div>
 
                             <br />
@@ -98,14 +105,13 @@ const Register = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-                                {/* <span className="span-required">Digite um email válido</span> */}
                             </div>
 
                             <br />
                             <div className="textfield">
                                 <label htmlFor="senha">Senha:</label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     id="input"
                                     value={password}
                                     name="password"
@@ -113,9 +119,9 @@ const Register = () => {
                                     required
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                {/* <span id="visible" onClick={handleClick}>
-                                {inputType === 'password' ? <FaEyeSlash /> : <FaEye />}
-                            </span> */}
+                                <span onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
                                 <br />
                             </div>
 
@@ -135,6 +141,12 @@ const Register = () => {
 
                             <div className='container-btn'>
                                 {!loading && <button className='button-login'>CRIAR</button>}
+
+                                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>
+                                    <FaGoogle className='google-icon' />
+                                    CRIAR CONTA COM GOOGLE
+                                </button>}
+
                                 {loading && <button className='button-login' disabled >AGUARDE...</button>}
                                 {error && <p className='error'>{error}</p>}
                             </div>

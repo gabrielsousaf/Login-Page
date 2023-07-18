@@ -4,14 +4,15 @@ import Cat from '../../assets/cat-animate.svg'
 import { useState, useEffect } from 'react';
 import { useAuthentication } from '../../hooks/UseAuthentication';
 import { Link } from 'react-router-dom';
-// import { FaEye } from 'react-icons/fa';
-// import { FaEyeSlash } from 'react-icons/fa';
+
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, loginWithGoogle, error: authError, loading } = useAuthentication()
 
@@ -52,6 +53,10 @@ const Login = () => {
     }
   }, [authError])
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  }
+
   return (
     <div>
       <div className="main-login">
@@ -83,20 +88,28 @@ const Login = () => {
               <div className="textfield">
                 <label htmlFor="senha">Senha:</label>
                 <input 
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   id="input"
                   name="password"
                   placeholder="Senha" 
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <span onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
                 <br />
               </div>
 
              
               <div className='container-btn'>
                 {!loading && <button className='button-login'>ENTRAR</button>}
-                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>ENTRAR COM GOOGLE</button>}
+
+                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>
+                  <FaGoogle className='google-icon' />
+                  ENTRAR COM GOOGLE
+                </button>}
+
                 {loading && <button className='button-login' disabled >AGUARDE...</button>}
                 {error && <p className='error'>{error}</p>}
               </div>
