@@ -6,9 +6,11 @@ import { useAuthentication } from "../hooks/UseAuthentication";
 
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Error404 from "../pages/Error404/Error404";
 
 import { AuthProvider } from "../context/AuthContext";
 import Dashboard from "../pages/Dashboard/Dashboard";
+
 
 const AppRoutes = ()  => {
 
@@ -48,7 +50,7 @@ const AppRoutes = ()  => {
 
           <Route 
             path="*"
-            element={!user ? <Login /> : <Navigate to="/dashboard" />}
+            element={<Error404 />}
           />
 
         </Routes>
