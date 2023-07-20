@@ -4,7 +4,7 @@
 ![Design_sem_nome__1_-removebg-preview](https://github.com/gabrielsousaf/Login-Form-React/assets/121953504/aa015fcf-5f4e-4966-9b50-a20882e1ba75)
 
 
-# 📱 Churrascometro.
+# 📱 Login-Form-React.
 > * Esse repositório tem como objetivo principal apresentar meus estudos e aplicar em projetos pessoais em React.
 > * Formulario de cadastramento e login de usuários feito em react e firebase..
   
