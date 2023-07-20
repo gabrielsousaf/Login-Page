@@ -1,21 +1,20 @@
 <h1 align="center" width:100%>
-  
-![CHURRASCÔMETRO - Google Chrome 2022-06-06 20-28-38](https://user-images.githubusercontent.com/97768716/172265964-0c9f9b6f-9645-4d21-b4f7-d06fa7119fd3.gif)
-![Design_sem_nome__4_-removebg-preview (1)](https://user-images.githubusercontent.com/97768716/172266026-bd40aa6d-a1b2-45f2-b65e-b8ca6e11780e.png)
 
- 
+![Form React Login - Google Chrome 2023-07-20 11-20-46](https://github.com/gabrielsousaf/Login-Form-React/assets/121953504/6bd08c8a-75f4-4ed6-94d0-946175152cf3)
+![Design_sem_nome__1_-removebg-preview](https://github.com/gabrielsousaf/Login-Form-React/assets/121953504/aa015fcf-5f4e-4966-9b50-a20882e1ba75)
+
 
 # 📱 Churrascometro.
 > * Esse repositório tem como objetivo principal apresentar meus estudos e aplicar em projetos pessoais em React.
-> * Site par calcular a quantidade de carne e bebida para o churrasco feito em React.
+> * Formulario de cadastramento e login de usuários feito em react e firebase..
   
 
 ## ⚙ Descrição do projeto.
-> * Vai receber as informações via input e fazer o calculo.<br>
-> * Carne - 400gr por pessoa + de 6horas - 650gr<br>
-> * Cerveja - 1200ml por Pessoa + 6 horas - 2000ml<br>
-> * Refrigerante/água - 1000ml por pessoa + 6 horas 1500ml.<br>
-> * Crianças valem pela metade.  
+> * Configuração de rotas usando o React Router Dom.
+> * Página de Erro 404: Esta página é renderizada quando o usuário acessa uma rota que não corresponde a nenhuma das rotas definidas no projeto.
+> * Utilização de um contexto de autenticação para gerenciar o estado do usuário logado e autenticação de usuário usando Firebase Authentication.
+> * Renderização condicional de componentes com base no estado do usuário.
+> * Utilização de um provedor de contexto para fornecer o estado do usuário autenticado para os componentes descendentes.
  
 
 ## ☕ Tecnologias Usadas
