@@ -44,7 +44,7 @@ const Login = () => {
       await loginWithGoogle();
     }
     catch (error){
-      setError('Ocorreu um erro no login com o Google. Por favor, tenete novamente!')
+      setError('Ocorreu um erro no login com o Google. Por favor, tente novamente!')
     }
   }
 
