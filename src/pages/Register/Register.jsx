@@ -8,7 +8,9 @@ import { Link } from 'react-router-dom';
 
 import { useAuthentication } from '../../hooks/UseAuthentication';
 
-import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Icon_Google from '../../assets/icons8-google.svg'
+
 
 const Register = () => {
     const [displayName, setDisplayName] = useState("")
@@ -19,7 +21,7 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const {createUser, loginWithGoogle, error: authError, loading} = useAuthentication();
+    const { createUser, loginWithGoogle, error: authError, loading } = useAuthentication();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +34,7 @@ const Register = () => {
             password
         }
 
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             setError("As senhas precisam ser iguais")
             return;
         }
@@ -41,24 +43,24 @@ const Register = () => {
 
         console.log(res);
     }
-    
+
     const handleLoginWithGoogle = async (e) => {
         e.preventDefault();
-    
+
         setError('');
-    
+
         console.log('Ok')
-    
+
         try {
-          await loginWithGoogle();
+            await loginWithGoogle();
         }
-        catch (error){
-          setError('Ocorreu um erro no login com o Google. Por favor, tenete novamente!')
+        catch (error) {
+            setError('Ocorreu um erro no login com o Google. Por favor, tenete novamente!')
         }
     }
 
     useEffect(() => {
-        if(authError) {
+        if (authError) {
             setError(authError);
         }
     }, [authError])
@@ -145,10 +147,10 @@ const Register = () => {
                             <div className='container-btn'>
                                 {!loading && <button className='button-login'>CRIAR</button>}
 
-                                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>
-                                    <FaGoogle className='google-icon' />
-                                    CRIAR CONTA COM GOOGLE
-                                </button>}
+                                {!loading && <span onClick={handleLoginWithGoogle} className='button-google'>
+                                    <img src={Icon_Google} />
+                                </span>
+                                }
 
                                 {loading && <button className='button-login' disabled >AGUARDE...</button>}
                                 {error && <p className='error'>{error}</p>}

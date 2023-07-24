@@ -138,27 +138,14 @@ body *{
     background-color: #00ff77;
 }
 
-.button-google {
-    width: 100%;
+.button-google img {
+    width: 40px;
     margin-top: 20px;
-    color: #FFF;
-    font-size: 18px;
-    align-items: center;
-    display: flex;
-    border: none;
-    justify-content: center;
-    transition: 300ms all ease;
+    cursor: pointer;
+    margin-right: 20px;
 }
 
-.button-google:hover{
-    background-color: #1a1a1a80;
-    border: none;
-}
 
-.google-icon{
-    font-size: 24px;
-    margin-right: 7px;
-}
 
 .error{
     background-color: #f8d7da;

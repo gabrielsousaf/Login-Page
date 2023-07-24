@@ -1,12 +1,13 @@
 import { Helmet } from 'react-helmet';
 import '../Register/Register.css'
 import Cat from '../../assets/cat-animate.svg'
+import Icon_Google from '../../assets/icons8-google.svg'
 
 import { useState, useEffect } from 'react';
 import { useAuthentication } from '../../hooks/UseAuthentication';
 import { Link } from 'react-router-dom';
 
-import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
+import { FaEye, FaEyeSlash} from 'react-icons/fa';
 
 const Login = () => {
 
@@ -107,10 +108,15 @@ const Login = () => {
               <div className='container-btn'>
                 {!loading && <button className='button-login'>ENTRAR</button>}
 
-                {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>
+                {!loading && <span onClick={handleLoginWithGoogle} className='button-google'>
+                  <img src={Icon_Google} />  
+                  </span>
+                }
+
+                {/* {!loading && <button className='button-google' onClick={handleLoginWithGoogle}>
                   <FaGoogle className='google-icon' />
                   ENTRAR COM GOOGLE
-                </button>}
+                </button>} */}
 
                 {loading && <button className='button-login' disabled >AGUARDE...</button>}
                 {error && <p className='error'>{error}</p>}
