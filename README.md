@@ -6,7 +6,7 @@
 
 # 📱 Login-Form-React.
 > * Esse repositório tem como objetivo principal apresentar meus estudos e aplicar em projetos pessoais em React.
-> * Formulario de cadastramento e login de usuários feito em react e firebase..
+> * Formulario de cadastramento e login de usuários feito em react e firebase.
   
 
 ## ⚙ Descrição do projeto.
