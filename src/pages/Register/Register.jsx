@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuthentication } from '../../hooks/UseAuthentication';
+import { isStrongPassword } from '../../utils/passwordUtils'
 
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Icon_Google from '../../assets/icons8-google.svg'
@@ -23,6 +24,12 @@ const Register = () => {
 
     const { createUser, loginWithGoogle, error: authError, loading } = useAuthentication();
 
+    
+    const isEmailValid = (email) => {
+        const allowedDomains = /@(gmail\.com|hotmail\.com|outlook\.com|yahoo\.com)$/i;
+        return allowedDomains.test(email);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -34,8 +41,18 @@ const Register = () => {
             password
         }
 
+        if (!isEmailValid(email)) {
+            setError("Por favor, use um e-mail do Gmail, Hotmail, Outlook ou Yahoo.");
+            return;
+        }
+
         if (password !== confirmPassword) {
             setError("As senhas precisam ser iguais")
+            return;
+        }
+
+        if (!isStrongPassword(password)) {
+            setError("A senha precisa ter pelo menos 8 caracteres uma letra maíuscula um número e um caracter especial")
             return;
         }
 
