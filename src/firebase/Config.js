@@ -1,14 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore} from "firebase/firestore";
-import { GoogleAuthProvider } from "firebase/auth"
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCaBUS8iYzVkEvrGhOZqATsU5SepkBFfno",
-  authDomain: "loginform-1394b.firebaseapp.com",
-  projectId: "loginform-1394b",
-  storageBucket: "loginform-1394b.appspot.com",
-  messagingSenderId: "197052441944",
-  appId: "1:197052441944:web:bcde1b7b17962c1aa0312d"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
