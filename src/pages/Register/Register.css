@@ -12,25 +12,30 @@ body *{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    overflow: hidden;
 }
 
 .left-login{
     width: 50vw;
-    height: 100vh;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    padding: 5rem;
 }
 
 .left-login h1{
     color: #77ffc0;
     font-size: 28pt;
     font-weight: 800;
+    padding-top: 8rem;
 }
 
 .left-login-imagem{
-    width: 35vw;
+    max-width: 20vw;
 }
 
 
@@ -179,6 +184,14 @@ body *{
 @media(max-width:1130px){
     .card-login{
         width: 85%;
+    }
+
+    .main-login{
+        overflow: scroll;
+    }
+
+    .right-login{
+        margin-bottom: 2rem;
     }
 
 }
