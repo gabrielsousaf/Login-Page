@@ -1,133 +1,102 @@
-import { db } from "../firebase/Config"
-
-import{
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    updateProfile,
-    signOut,
-    signInWithPopup,
-    GoogleAuthProvider,
-} from 'firebase/auth'
-
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from "react";
+import { 
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider
+} from "firebase/auth";
+import { db } from "../firebase/Config";
 
 export const useAuthentication = () => {
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(null)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
 
-    const [cancelled, setCancelled] = useState(false)
+  const auth = getAuth();
 
-    const auth = getAuth()
+  const checkIfIsCancelled = useCallback(() => {
+    if (cancelled) return true;
+    return false;
+  }, [cancelled]);
 
-    function checkIfIsCancelled() {
-        if (cancelled) {
-            return;
-        }
+  const handleError = (err) => {
+    if (!err?.message) return "Ocorreu um erro. Tente novamente.";
+    
+    if (err.message.includes("Password")) return "A senha precisa conter pelo menos 6 caracteres";
+    if (err.message.includes("email-already")) return "E-mail já cadastrado";
+    if (err.message.includes("user-not-found")) return "Usuário não encontrado.";
+    if (err.message.includes("wrong-password")) return "Senha incorreta.";
+    
+    return "Ocorreu um erro, por favor tente mais tarde.";
+  };
+
+  const createUser = async ({ email, password, displayName }) => {
+    if (checkIfIsCancelled()) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(user, { displayName });
+      return user;
+    } catch (err) {
+      setError(handleError(err));
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const createUser = async (data) => {
-        checkIfIsCancelled()
+  const login = async ({ email, password }) => {
+    if (checkIfIsCancelled()) return;
 
-        setLoading(true)
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try{
-            const {user} = await createUserWithEmailAndPassword(
-                auth,
-                data.email,
-                data.password
-            )
-
-            await updateProfile(user, {
-                displayName: data.displayName
-            })
-
-            setLoading(false);
-            return user;
-        }
-
-        catch (error) {
-            console.log(error.message)
-            console.log(typeof error.message)
-
-            let systemErrorMessage
-
-            if(error.message.includes("Password")){
-                systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres"
-            }
-            else if(error.message.includes("email-already")) {
-                systemErrorMessage = "E-mail já cadastrado"
-            }
-
-            else{
-                systemErrorMessage = "Ocorreu um erro, tente novamente!"
-            }
-            
-            setLoading(false);
-            setError(systemErrorMessage)
-        }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      setError(handleError(err));
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const logout = () => {
-        checkIfIsCancelled()
+  const loginWithGoogle = async () => {
+    if (checkIfIsCancelled()) return;
 
-        signOut(auth)
+    setLoading(true);
+    setError(null);
+
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      setError("Ocorreu um erro no login com o Google. Por favor, tente novamente!");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const login = async(data) => {
-        
-        checkIfIsCancelled()
+  const logout = () => {
+    if (checkIfIsCancelled()) return;
+    signOut(auth);
+  };
 
-        setLoading(true)
-        setError(false)
+  useEffect(() => {
+    return () => setCancelled(true);
+  }, []);
 
-        try {
-            await signInWithEmailAndPassword(auth, data.email, data.password)
-            setLoading(false)
-        }
-
-        catch (error) {
-            let systemErrorMessage;
-
-            if (error.message.includes("user-not-found")){
-                systemErrorMessage = "Usuário não encontrado."
-            }
-            else if (error.message.includes("wrong-password")) {
-                systemErrorMessage = "Senha incorreta."
-            }
-            else {
-                systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde."
-            }
-
-            setError(systemErrorMessage)
-            setLoading(false)
-        }
-    }
-
-    const loginWithGoogle = async () => {
-        try{
-            const provider = new GoogleAuthProvider();
-            await signInWithPopup(auth, provider);
-            setLoading(false);
-        }
-        catch (error){
-            setError("Ocorreu um erro no login com o Google. Por favor, tente novamente!")
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        return () => setCancelled(true)
-    }, []);
-
-    return {
-        auth,
-        createUser,
-        error,
-        loading,
-        logout,
-        login,
-        loginWithGoogle
-    }
-}
+  return {
+    auth,
+    createUser,
+    login,
+    loginWithGoogle,
+    logout,
+    error,
+    loading
+  };
+};
